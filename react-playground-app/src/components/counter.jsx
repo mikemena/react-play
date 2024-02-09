@@ -42,7 +42,7 @@ export default function Counter() {
   }
 
   function handleRangeChange(e) {
-    setRangeValue(e.target.value);
+    setRangeValue(Math.abs(e.target.value));
   }
 
   return (
