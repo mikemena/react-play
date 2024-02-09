@@ -2,33 +2,36 @@ import { useState } from "react";
 
 export default function Counter() {
   const [count, setCount] = useState(0);
-  const [increment, setIncrement] = useState(0);
+
+  const [rangeValue, setRangeValue] = useState(5);
 
   const date = new Date("July 20 2030");
   date.setDate(date.getDate() + count);
 
-  function handleIncrement() {
-    setIncrement((c) => c + 1);
-  }
-
-  function handleDecrement() {
-    setIncrement((c) => c - 1);
-  }
-
   function handleMinusCount() {
-    setCount((c) => c - increment);
+    setCount((c) => c - rangeValue);
   }
 
   function handlePlusCount() {
-    setCount((c) => c + increment);
+    setCount((c) => c + rangeValue);
+  }
+
+  function handleRangeChange(e) {
+    setRangeValue(e.target.value);
   }
 
   return (
     <div>
       <div>
-        <button onClick={handleDecrement}>Decrement</button>
-        <span> Increment By {increment} </span>
-        <button onClick={handleIncrement}>Increment</button>
+        <input
+          type="range"
+          min="0"
+          max="10"
+          value={rangeValue}
+          onChange={handleRangeChange}
+        />
+
+        <span> Increment By {rangeValue} </span>
       </div>
       <button onClick={handleMinusCount}>Decrement</button>
       <span>Count By {count}</span>
