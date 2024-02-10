@@ -2,13 +2,11 @@ import { useState } from "react";
 
 export default function Counter() {
   const [count, setCount] = useState(0);
-
   const [rangeValue, setRangeValue] = useState(1);
-
   const today = new Date();
-  const hoy = formatDate(today);
-  const date = new Date(hoy);
-  date.setDate(date.getDate() + count);
+
+  // Adjust the date based on count directly
+  today.setDate(today.getDate() + count);
 
   function formatDate(date) {
     const monthNames = [
@@ -42,7 +40,11 @@ export default function Counter() {
   }
 
   function handleRangeChange(e) {
-    setRangeValue(Math.abs(e.target.value));
+    setRangeValue(Math.abs(Number(e.target.value)));
+  }
+
+  function handleCountChange(e) {
+    setCount(Math.abs(Number(e.target.value)));
   }
 
   return (
@@ -58,9 +60,10 @@ export default function Counter() {
 
         <span> Increment By {rangeValue} </span>
       </div>
-      <button onClick={handleMinusCount}>Decrement</button>
-      <span>Count By {count}</span>
-      <button onClick={handlePlusCount}>Increment</button>
+      <button onClick={handleMinusCount}>-</button>
+      <input type="number" value={count} onChange={handleCountChange} />
+
+      <button onClick={handlePlusCount}>+</button>
 
       <p>
         <span>
@@ -70,7 +73,7 @@ export default function Counter() {
             ? `${count} days from today is `
             : `${Math.abs(count)} days ago was `}
         </span>
-        <span>{date.toDateString()}</span>
+        <span>{formatDate(today)}</span>
       </p>
     </div>
   );
